@@ -1,4 +1,15 @@
 ﻿{% extends 'base.html' %}
+
 {% block content %}
 <h1>編輯任務</h1>
+
+<form method="post">
+    <label>任務標題</label>
+    <input type="text" name="title" value="{{ task['title'] }}" required>
+
+    <label>任務內容</label>
+    <textarea name="description">{{ task['description'] }}</textarea>
+
+    <input type="submit" value="儲存修改">
+</form>
 {% endblock %}

@@ -1,4 +1,15 @@
 ﻿{% extends 'base.html' %}
+
 {% block content %}
 <h1>新增任務</h1>
+
+<form method="post">
+    <label>任務標題</label>
+    <input type="text" name="title" required>
+
+    <label>任務內容</label>
+    <textarea name="description"></textarea>
+
+    <input type="submit" value="新增">
+</form>
 {% endblock %}

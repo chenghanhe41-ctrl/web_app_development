@@ -1,4 +1,41 @@
 ﻿{% extends 'base.html' %}
+
 {% block content %}
 <h1>任務列表</h1>
+
+<div class="nav">
+    <a href="{{ url_for('tasks.index') }}">全部</a>
+    <a href="{{ url_for('tasks.index', status='pending') }}">未完成</a>
+    <a href="{{ url_for('tasks.index', status='completed') }}">已完成</a>
+</div>
+
+{% if tasks %}
+    {% for task in tasks %}
+        <div class="task">
+            <h2 class="{% if task['is_completed'] == 1 %}completed{% endif %}">
+                {{ task['title'] }}
+            </h2>
+            <p>{{ task['description'] }}</p>
+            <p>狀態：
+                {% if task['is_completed'] == 1 %}
+                    已完成
+                {% else %}
+                    未完成
+                {% endif %}
+            </p>
+
+            <form action="{{ url_for('tasks.toggle_task', task_id=task['id']) }}" method="post" style="display:inline;">
+                <button type="submit">切換狀態</button>
+            </form>
+
+            <a href="{{ url_for('tasks.edit_task', task_id=task['id']) }}">編輯</a>
+
+            <form action="{{ url_for('tasks.delete_task', task_id=task['id']) }}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('確定要刪除這個任務嗎？')">刪除</button>
+            </form>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>目前沒有任務。</p>
+{% endif %}
 {% endblock %}
